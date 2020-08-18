@@ -1,13 +1,15 @@
 package tdd.initial;
 
-public class Dollar {
-    int amount;
+public class Dollar extends Money{
+
 
     public Dollar(int amount) {
         this.amount = amount;
     }
 
-    void times(int multiplier) {
-        amount *= multiplier;
+    Dollar times(int multiplier) {
+        return new Dollar(amount * multiplier);
     }
+
+
 }
