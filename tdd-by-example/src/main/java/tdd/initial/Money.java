@@ -28,12 +28,14 @@ public class Money implements Expression {
     public boolean equals(Object object) {
 
         Money money = (Money) object;
-        return amount == money.amount && this.currency== money.currency;
+        return amount == money.amount && this.currency == money.currency;
     }
+
     @Override
-    public Money reduce(String to){
-        return this;
+    public Money reduce(Bank bank, String to) {
+        return new Money(amount / bank.rate(this.currency, to), to);
     }
+
 
     @Override
     public String toString() {
@@ -43,11 +45,13 @@ public class Money implements Expression {
                 '}';
     }
 
-    public Money times(int multiplier) {
-        return new Money(amount*multiplier,this.currency);
+    @Override
+    public Expression times(int multiplier) {
+        return new Money(amount * multiplier, this.currency);
     }
 
-    public Expression plus(Money addmend){
-        return  new Sum(this,addmend);
+    @Override
+    public Expression plus(Expression addmend) {
+        return new Sum(this, addmend);
     }
 }
